@@ -2,7 +2,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 
 # Note: The default behavior now has injection attack prevention off.
-tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen-7B-Chat-Int4", trust_remote_code=True)
+tokenizer = AutoTokenizer.from_pretrained("deepseek-ai/deepseek-r1-distill-llama-8b", trust_remote_code=True)
 
 model = AutoModelForCausalLM.from_pretrained(
     "deepseek-ai/deepseek-r1-distill-llama-8b",
