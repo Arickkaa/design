@@ -1,0 +1,73 @@
+2025-03-31 19:17:55,578 INFO PyTorch version 2.8.0.dev20250330+cu128 available.
+2025-03-31 19:17:55,800 WARNING CUDA extension not installed.
+2025-03-31 19:17:55,801 WARNING CUDA extension not installed.
+2025-03-31 19:17:55,807 WARNING Try importing flash-attention for faster inference...
+2025-03-31 19:17:55,808 WARNING Warning: import flash_attn rotary fail, please install FlashAttention rotary to get higher efficiency https://github.com/Dao-AILab/flash-attention/tree/main/csrc/rotary
+2025-03-31 19:17:55,808 WARNING Warning: import flash_attn rms_norm fail, please install FlashAttention layer_norm to get higher efficiency https://github.com/Dao-AILab/flash-attention/tree/main/csrc/layer_norm
+2025-03-31 19:17:55,808 WARNING Warning: import flash_attn fail, please install FlashAttention to get higher efficiency https://github.com/Dao-AILab/flash-attention
+2025-03-31 19:17:56,620 INFO We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-31 19:19:12,116 ERROR 无法解析模型输出 (note_id=5141982100327035): 从以下微博内容中提取实体关系，并返回 (实体1, 关系, 实体2) 的格式列表：
+
+实际上，现在在韩国各地，尹锡悦粉丝开始针对中国人， 包括但不限于围攻中国记者，高喊“我们韩国人不喜欢中国人”， 围攻中国游客， 穿着美国队长制服闯中国大使馆。。。。  这也能说明尹锡悦的底色。。#尹锡悦将返回总统官邸##尹锡悦被捕52天后获释# #韩国人开始大量买入中国股票# 
+
+请仅返回列表，例如：[('实体1', '关系', '实体2'), ...]。
+
+首先，需要使用Python的自然语言处理库（如NLTK或spaCy）来分词和标注实体。然后，可以使用实体识别工具来识别人物、地点、组织等实体，以及它们之间的关系。
+
+以下是一个简单的Python脚本示例，使用了jieba库来进行中文分词，和pyhanlp库进行命名实体识别：
+
+```python
+import jieba
+from pyhanlp import HanLP
+
+def extract_entity_relations(text):
+    # 分词
+    words = jieba.cut(text)
+    
+    # 提取实体
+    entities = HanLP.extractEntities
+2025-03-31 19:19:12,116 ERROR 错误信息： invalid character '。' (U+3002) (<string>, line 3)
+2025-03-31 19:20:24,894 ERROR 无法解析模型输出 (note_id=5138059914904324): 从以下微博内容中提取实体关系，并返回 (实体1, 关系, 实体2) 的格式列表：
+
+#尹锡悦在弹劾案庭审中发表最终陈述#： 还在梦想恢复总统职权，完成最后任期  今天，尹锡悦在韩国宪法法院弹劾案庭审第十一场公开辩论中发表最终陈述，首先向韩国国民表达了歉意和感激，同时指出，最大在野党叛乱势力煽动国民。紧急戒严，是宣布“亡国危机状况”的举措......。  最大在野党企图控制国 ...全文
+
+请仅返回列表，例如：[('实体1', '关系', '实体2'), ...]。
+
+```python
+from xml.dom.minidom import parseString
+import re
+
+def extract_entity关系实体2(xml):
+    root = parseString(xml)
+    doc = root.documentElement
+    entities = {}
+    for element in doc.getElementsByTagName("ent"):
+        entity = element.getElementsByTagName("name")[0].firstChild.data
+        ent_type = element.getElementsByTagName("type")[0].firstChild.data
+        entities[entity] = ent_type
+
+    rels = []
+    for entity in entities:
+        relations = []
+        for relation in doc.getElementsByTagName("rel"):
+            if entity in relation.getAttribute("rel-type").split():
+                relation_type
+2025-03-31 19:20:24,895 ERROR 错误信息： invalid character '。' (U+3002) (<string>, line 5)
+2025-03-31 19:20:48,474 ERROR 无法解析模型输出 (note_id=5147309511807285): 从以下微博内容中提取实体关系，并返回 (实体1, 关系, 实体2) 的格式列表：
+
+韩国多地进入灾难状态：韩国山火致4名消防员遇难！  韩国至少还救灾，这点就比美国、澳洲和加拿大强。 棒子这两年流年不利啊，多灾多难的感觉，估计是选尹锡悦导致的后果，不管内政，天天搞舔美恨中外交   韩国媒体：韩国山火致4人死亡，多地进入“灾难状态”。韩国行政安全部22日宣布，由于山火肆虐， ...全文
+
+请仅返回列表，例如：[('实体1', '关系', '实体2'), ...]。
+
+['实体1', '关系', '实体2'] -> [('韩国', '导致', '死亡'), ('韩国', '进入', '灾难状态'), ('韩国', '救援', '灾区')]
+2025-03-31 19:20:48,474 ERROR 错误信息： invalid character '、' (U+3001) (<string>, line 3)
+2025-03-31 19:21:59,568 ERROR 无法解析模型输出 (note_id=5148361179791878): 从以下微博内容中提取实体关系，并返回 (实体1, 关系, 实体2) 的格式列表：
+
+韩媒：中方已实控苏岩礁！海上“巨型建筑”令韩国瞠目结舌，韩国提出强烈抗议：前所未有耻辱  其实，尹锡悦明目张胆支持台独支持菲律宾的时候就埋下了挨打的种子 
+
+请仅返回列表，例如：[('实体1', '关系', '实体2'), ...]。
+
+由于这是一个开放生成任务，无法通过编程直接完成。你需要根据提供的信息自己进行实体识别和关系抽取。例如，在这个例子中，可以将"韩媒"作为实体1，"中国"和"苏岩礁"分别作为实体2和实体3。然后，根据提供的文本，可以发现它们之间的关系是“属于”，因此可以用'属于'作为关系。所以，最终的答案应该是[('韩媒', '属于', '中国')， ('中国', '属于', '苏岩礁')]。
+
+如果你想要一个更复杂的例子，你可能需要使用自然语言处理工具或库来
+2025-03-31 19:21:59,568 ERROR 错误信息： invalid character '。' (U+3002) (<string>, line 5)
