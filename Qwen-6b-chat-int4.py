@@ -1,7 +1,7 @@
 import os
 import csv
 import torch
-from transformers import AutoTokenizer, AutoModel
+from transformers import AutoTokenizer, AutoModelForCausalLM
 import pandas as pd
 import logging
 import unicodedata
@@ -19,19 +19,14 @@ def fetch_data():
 
 # 2. 使用 ChatGLM2-6b-int4 进行关系抽取
 class RelationExtractor:
-    def __init__(self, model_name="THUDM/chatglm2-6b-int4", token=None):
-        """
-        加载模型。
-        如果模型为私有仓库，请传入有效 token，否则 token 设置为 None。
-        """
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True, token=token)
-        # 使用 AutoModel 加载模型，使用 half() 降低显存占用；若显存不足可改为 .to("cpu")
-        self.model = AutoModel.from_pretrained(model_name, trust_remote_code=True, token=token).half().cuda()
+    def __init__(self, model_name="Qwen/Qwen-7B-Chat-Int4", token=None):
+        self.tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
+        self.model = AutoModelForCausalLM.from_pretrained(model_name, trust_remote_code=True, device_map="auto",)
         self.model.eval()
 
     def extract_relation(self, text):
         prompt = (
-            f"从以下微博内容中提取实体关系，并返回 (实体1, 关系, 实体2) 的 JSON 格式列表：\n\n"
+            f"从以下微博内容中提取实体关系，并返回 (实体1, 关系, 实体2) 的格式列表：\n\n"
             f"{text}\n\n请仅返回列表，例如：[('实体1', '关系', '实体2'), ...]"
         )
         inputs = self.tokenizer(prompt, return_tensors="pt", truncation=True, max_length=512)
@@ -46,7 +41,7 @@ class RelationExtractor:
 # 3. 主流程：抽取关系并逐行写入 CSV 文件，同时显示进度
 def main():
     df = fetch_data()
-    extractor = RelationExtractor(token=None)
+    extractor = RelationExtractor()
     
     with open("relations.csv", "w", encoding="utf-8", newline="") as csvfile:
         csv_writer = csv.writer(csvfile)
